@@ -1,10 +1,10 @@
 # My ion3 confs 
 
-[ion3 in Wikipedia](http://en.wikipedia.org/wiki/Ion_(window_manager))
+[ion3 in Wikipedia]( http://en.wikipedia.org/wiki/Ion_(window_manager) )
 
 An unordered list of changes to the default config of ion3:
 
-* Default terminal is [Terminator](http://en.wikipedia.org/wiki/Terminator_(terminal_emulator)) in `cfg_ion.lua`
+* Default terminal is [Terminator]( http://en.wikipedia.org/wiki/Terminator_(terminal_emulator) ) in `cfg_ion.lua`
 * Default tiling is one full-screen frame in `cfg_tiling.lua`
 * Default look is look_simpleblue in `look.lua`
 * Battery (defined in `statusd_linuxbatt.lua`) added to the bottom status bar in `cfg_statusbar.lua`
