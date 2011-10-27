@@ -13,8 +13,8 @@ defbindings("WTiling", {
     kpress(META.."N", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
     -- kpress(META.."Tab", "ioncore.goto_next(_sub, 'right')"),
 
-    kpress(META.."comma", "ioncore.goto_next(_sub, 'any', {no_ascend=_})"),
-    kpress(META.."period", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
+    kpress(META.."comma", "ioncore.goto_next(_sub, 'next', {no_ascend=_})"),
+    kpress(META.."period", "ioncore.goto_next(_sub, 'prev', {no_ascend=_})"),
  
     submap(META.."K", {
         kpress("Tab", "ioncore.goto_next(_sub, 'left')"),
