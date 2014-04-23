@@ -1,1 +1,1 @@
-look_newviolet.lua
+look_simpleblue.lua
