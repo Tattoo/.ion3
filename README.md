@@ -1,7 +1,7 @@
 # My ~~ion3~~ notion confs 
 
-[ion3 in Wikipedia]( http://en.wikipedia.org/wiki/Ion_\(window_manager\) )
-[notion homepage](http://notion.sourceforge.net/)
+* [ion3 in Wikipedia]( http://en.wikipedia.org/wiki/Ion_\(window_manager\) )
+* [notion homepage](http://notion.sourceforge.net/)
 
 ## Changes to default ion3 configs
 
