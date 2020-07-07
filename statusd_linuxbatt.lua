@@ -22,43 +22,58 @@ local defaults={
 local settings=table.join(statusd.get_config("linuxbatt"), defaults)
 
 function linuxbatt_do_find_capacity()
-        local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/info')
-        local infofile=f:read('*a')
-        f:close()
-        local i, j, capacity = string.find(infofile, 'last full capacity:%s*(%d+) .*')
-        return capacity
+        --local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/info')
+        --local infofile=f:read('*a')
+        --f:close()
+        --local i, j, capacity = string.find(infofile, 'last full capacity:%s*(%d+) .*')
+        --return capacity
+        local file = io.open('/sys/class/power_supply/BAT'.. settings.bat ..'/capacity')
+        local content = file:read('*a')
+        file:close()
+        return content
 end
 
 local capacity = linuxbatt_do_find_capacity()
 
 function get_linuxbatt()
 	
-        local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/state')
-	local statefile=f:read('*a')
-	f:close()
-        local i, j, remaining = string.find(statefile, 'remaining capacity:%s*(%d+) .*')
-        local percent = math.floor( remaining * 100 / capacity )
+        --local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/state')
+	      --local statefile=f:read('*a')
+	      --f:close()
+        --local i, j, remaining = string.find(statefile, 'remaining capacity:%s*(%d+) .*')
+        --local percent = math.floor( remaining * 100 / capacity )
 
-        local i, j, statename = string.find(statefile, 'charging state:%s*(%a+).*')
-        if statename == "charging" then
-                return percent, "+"
-        elseif statename == "discharging" then
-                return percent, "-"
-        else
-                return percent, " "
+        --local i, j, statename = string.find(statefile, 'charging state:%s*(%a+).*')
+        --if statename == "charging" then
+        --        return percent, "+"
+        --elseif statename == "discharging" then
+        --        return percent, "-"
+        --else
+        --        return percent, " "
+        --end
+        local capacity = linuxbatt_do_find_capacity()
+        local file = io.open('/sys/class/power_supply/BAT'.. settings.bat ..'/capacity')
+        local state = file:read('*a')
+        file:close()
+        if state == 'Discharging' then
+            return capacity, '-'
         end
+        if state == 'Full' then
+            return capacity, ' '
+        end
+        return capacity, '+'
 end
 
 function update_linuxbatt()
 	local perc, state = get_linuxbatt()
 	statusd.inform("linuxbatt", tostring(perc))
 	statusd.inform("linuxbatt_state", state)
-        if perc < settings.critical_threshold
-        then statusd.inform("linuxbatt_hint", "critical")
-        elseif perc < settings.important_threshold
-        then statusd.inform("linuxbatt_hint", "important")
-        else statusd.inform("linuxbatt_hint", "normal")
-        end
+        --if perc < settings.critical_threshold
+        --then statusd.inform("linuxbatt_hint", "critical")
+        --elseif perc < settings.important_threshold
+        --then statusd.inform("linuxbatt_hint", "important")
+        --else statusd.inform("linuxbatt_hint", "normal")
+        --end
 	linuxbatt_timer:set(settings.update_interval, update_linuxbatt)
 end
 
