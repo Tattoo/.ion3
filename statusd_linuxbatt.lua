@@ -52,10 +52,10 @@ function get_linuxbatt()
         --        return percent, " "
         --end
         local capacity = linuxbatt_do_find_capacity()
-        local file = io.open('/sys/class/power_supply/BAT'.. settings.bat ..'/capacity')
-        local state = file:read('*a')
+        local file = io.open('/sys/class/power_supply/BAT'.. settings.bat ..'/status')
+        local state = file:read('*l')
         file:close()
-        if state == 'Discharging' then
+        if state == "Discharging" then
             return capacity, '-'
         end
         if state == 'Full' then
